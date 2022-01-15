@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.brunobarbosa.rest.loja.domain.Categoria;
 import br.com.brunobarbosa.rest.loja.domain.Cidade;
+import br.com.brunobarbosa.rest.loja.domain.Cliente;
+import br.com.brunobarbosa.rest.loja.domain.Endereco;
 import br.com.brunobarbosa.rest.loja.domain.Estado;
 import br.com.brunobarbosa.rest.loja.domain.Produto;
+import br.com.brunobarbosa.rest.loja.domain.enums.TipoCliente;
 import br.com.brunobarbosa.rest.loja.repositories.CategoriaRepository;
 import br.com.brunobarbosa.rest.loja.repositories.CidadeRepository;
+import br.com.brunobarbosa.rest.loja.repositories.ClienteRepository;
+import br.com.brunobarbosa.rest.loja.repositories.EnderecoRepository;
 import br.com.brunobarbosa.rest.loja.repositories.EstadoRepository;
 import br.com.brunobarbosa.rest.loja.repositories.ProdutoRepository;
 
@@ -30,6 +35,12 @@ public class RestLojaApplication implements CommandLineRunner{
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(RestLojaApplication.class, args);
@@ -66,6 +77,15 @@ public class RestLojaApplication implements CommandLineRunner{
 		
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		Cliente cli1 = new Cliente(null, "Maria", "maria@email.com", "45612370", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("51511111", "566787750"));
+		Endereco e1 = new Endereco(null, "Rua A", "300", "Apto 101", "Bairro A", "5563247", cli1, c1);
+		Endereco e2 = new Endereco(null, "Rua B", "67", "Apto 301", "Bairro B", "5321354", cli1, c2);
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 	}
 
 }
