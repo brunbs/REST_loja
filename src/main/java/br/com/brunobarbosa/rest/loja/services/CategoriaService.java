@@ -1,5 +1,6 @@
 package br.com.brunobarbosa.rest.loja.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.ObjectNotFoundException;
@@ -40,7 +41,10 @@ public class CategoriaService {
 		} catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos!");
 		}
-		
+	}
+	
+	public List<Categoria> buscarTodos() {
+		return categoriaRepository.findAll();
 	}
 	
 }
