@@ -1,5 +1,6 @@
 package br.com.brunobarbosa.rest.loja.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.brunobarbosa.rest.loja.domain.Cliente;
 import br.com.brunobarbosa.rest.loja.dto.ClienteDTO;
+import br.com.brunobarbosa.rest.loja.dto.ClienteNovoDTO;
 import br.com.brunobarbosa.rest.loja.services.ClienteService;
 
 @RestController
@@ -63,5 +66,14 @@ public class ClienteResource {
 		Page<Cliente> listaDeClientes = clienteService.buscaComPaginacao(page, linesPerPage, orderBy, direction);
 		Page<ClienteDTO> listaDTO = listaDeClientes.map(Cliente -> new ClienteDTO(Cliente));
 		return ResponseEntity.ok().body(listaDTO);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNovoDTO clienteNovoDto) {
+		Cliente cliente = clienteService.fromDTO(clienteNovoDto);
+		cliente = clienteService.inserir(cliente);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(cliente.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 }

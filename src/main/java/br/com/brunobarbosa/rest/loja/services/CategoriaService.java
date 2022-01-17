@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.brunobarbosa.rest.loja.domain.Categoria;
 import br.com.brunobarbosa.rest.loja.dto.CategoriaDTO;
@@ -28,6 +29,7 @@ public class CategoriaService {
 				"Id: " + id + ", Tipo: " + Categoria.class.getName(), "Objeto Não Encontrado"));
 	}
 	
+	@Transactional
 	public Categoria inserir(Categoria categoria) {
 		categoria.setId(null);
 		return categoriaRepository.save(categoria);
