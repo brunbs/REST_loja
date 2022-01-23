@@ -20,6 +20,7 @@ import br.com.brunobarbosa.rest.loja.domain.PagamentoComCartao;
 import br.com.brunobarbosa.rest.loja.domain.Pedido;
 import br.com.brunobarbosa.rest.loja.domain.Produto;
 import br.com.brunobarbosa.rest.loja.domain.enums.EstadoPagamento;
+import br.com.brunobarbosa.rest.loja.domain.enums.Perfil;
 import br.com.brunobarbosa.rest.loja.domain.enums.TipoCliente;
 import br.com.brunobarbosa.rest.loja.repositories.CategoriaRepository;
 import br.com.brunobarbosa.rest.loja.repositories.CidadeRepository;
@@ -127,8 +128,14 @@ public class DBService {
 		Endereco e2 = new Endereco(null, "Rua B", "67", "Apto 301", "Bairro B", "5321354", cli1, c2);
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 		
-		clienteRepository.saveAll(Arrays.asList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		Cliente cli2 = new Cliente(null, "Ana Costa", "brunobiologia91@gmail.com", "11358565082", TipoCliente.PESSOAFISICA, pe.encode("123"));
+		cli2.addPerfil(Perfil.ADMIN);
+		cli1.getTelefones().addAll(Arrays.asList("5187721548", "5498742254"));
+		Endereco e3 = new Endereco(null, "Rua C", "455", null, "Bairro C", "546548456", cli2, c3);
+		cli1.getEnderecos().addAll(Arrays.asList(e3));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 		
