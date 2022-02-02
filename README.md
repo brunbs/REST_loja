@@ -16,4 +16,4 @@ Tecnologias utilizadas: Java, Spring Boot, Spring DATA, JPA, Spring Security, Po
 
 Modelo Conceitual utilizado como base:
 
-
+![diagrama-de-classes](https://user-images.githubusercontent.com/62837683/152170666-44a61e4e-ef27-463d-81d5-2cae962b6195.png)
